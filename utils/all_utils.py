@@ -5,6 +5,7 @@ import joblib # FOR SAVING MY MODEL AS A BINARY FILE
 from matplotlib.colors import ListedColormap
 import os
 plt.style.use("fivethirtyeight")
+import logging
 
 def prepare_data(df):
   """its used for depencent and independent features
@@ -22,10 +23,18 @@ def prepare_data(df):
   return X, y
 
 def save_model(model, filename):
+  """This sabes the trained model
+
+  Args:
+      model (python object): trained model to
+      filename (str): path to save the trained model
+  """
+  logging.info("Saving the trained model")
   model_dir = "models"
   os.makedirs(model_dir, exist_ok=True) # ONLY CREATE IF MODEL_DIR DOESN"T EXISTS
   filePath = os.path.join(model_dir, filename) # model/filename
   joblib.dump(model, filePath)
+  logging.info(f"saved the trained model {filename}")
 
 def save_plot(df, file_name, model):
   def _create_base_plot(df):
