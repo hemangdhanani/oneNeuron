@@ -4,8 +4,17 @@ import pandas as pd
 import joblib # FOR SAVING MY MODEL AS A BINARY FILE
 from matplotlib.colors import ListedColormap
 import os
+plt.style.use("fivethirtyeight")
 
 def prepare_data(df):
+  """its used for depencent and independent features
+
+  Args:
+      df (pd.Dataframe): its the pandas Dataframe
+
+  Returns:
+      tuple: it returns the tuples of dependent and independent variables
+  """
   X = df.drop("y", axis=1)
 
   y = df["y"]
