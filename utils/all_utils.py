@@ -8,7 +8,7 @@ plt.style.use("fivethirtyeight")
 import logging
 
 def prepare_data(df):
-  """its used for depencent and independent features
+  """its used for separate dependent and independent features
 
   Args:
       df (pd.Dataframe): its the pandas Dataframe
@@ -16,6 +16,8 @@ def prepare_data(df):
   Returns:
       tuple: it returns the tuples of dependent and independent variables
   """
+  logging.info("Preparing the data by segregating the dependent and independent variables")
+
   X = df.drop("y", axis=1)
 
   y = df["y"]
@@ -23,10 +25,10 @@ def prepare_data(df):
   return X, y
 
 def save_model(model, filename):
-  """This sabes the trained model
+  """This saves the trained model
 
   Args:
-      model (python object): trained model to
+      model (python object): trained model
       filename (str): path to save the trained model
   """
   logging.info("Saving the trained model")
@@ -37,14 +39,22 @@ def save_model(model, filename):
   logging.info(f"saved the trained model {filename}")
 
 def save_plot(df, file_name, model):
+  """
+  :param df: its a data frame
+  :param file_name: its path to save the plot
+  :param model: trained model
+ 
+  """
   def _create_base_plot(df):
+    logging.info("creating the base plot")
     df.plot(kind="scatter", x="x1", y="x2", c="y", s=100, cmap="winter")
     plt.axhline(y=0, color="black", linestyle="--", linewidth=1)
     plt.axvline(x=0, color="black", linestyle="--", linewidth=1)
-    figure = plt.gcf() # get current figure
+    figure = plt.gcf() # get current figure 
     figure.set_size_inches(10, 8)
 
   def _plot_decision_regions(X, y, classfier, resolution=0.02):
+    logging.info("plotting the decesion regions")
     colors = ("red", "blue", "lightgreen", "gray", "cyan")
     cmap = ListedColormap(colors[: len(np.unique(y))])
 
@@ -77,3 +87,4 @@ def save_plot(df, file_name, model):
   os.makedirs(plot_dir, exist_ok=True) # ONLY CREATE IF MODEL_DIR DOESN"T EXISTS
   plotPath = os.path.join(plot_dir, file_name) # model/filename
   plt.savefig(plotPath)
+  logging.info(f"saving the plot at {plotPath}")
